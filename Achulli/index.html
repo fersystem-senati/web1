@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Hercules - Administración</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        /* --- BARRA LATERAL (SIDEBAR) --- */
+        .sidebar {
+            width: 250px;
+            background-color: #4a0000; /* Color rojo oscuro/vino */
+            color: white;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Puedes poner tu imagen de fondo aquí si la tienes */
+        .sidebar::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1000&auto=format&fit=crop') center/cover;
+            opacity: 0.2; /* Para que se vea oscurecida */
+            z-index: 0;
+        }
+
+        .sidebar-content {
+            position: relative;
+            z-index: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand {
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .menu {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .menu li a {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .menu li a:hover {
+            background-color: rgba(255,255,255,0.1);
+            border-left: 4px solid white;
+        }
+
+        .menu li a i {
+            margin-right: 15px;
+            width: 20px;
+        }
+
+        .config {
+            margin-top: auto; /* Empuja esto al final */
+            padding: 15px 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .config a { color: white; text-decoration: none; display: flex; align-items: center; }
+        .config i { margin-right: 15px; }
+
+        /* --- PANEL PRINCIPAL --- */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        h2 { color: #333; }
+
+        .btn-update {
+            padding: 5px 15px;
+            background: #e0e0e0;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        /* --- SECCIONES DEL FORMULARIO --- */
+        .grid-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr; /* Columna ancha y columna estrecha */
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        input, select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+
+        .data-box {
+            background-color: #e0e0e0;
+            height: 150px; /* Simulación de la tabla vacía */
+            border: 1px solid #ccc;
+        }
+
+        /* BOTONES GRANDES */
+        .btn-large {
+            width: 100%;
+            padding: 20px;
+            color: white;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .btn-renew { background-color: #999; }
+        .btn-delete { background-color: #8b0000; } /* Rojo oscuro */
+        .btn-pay { background-color: #8b0000; height: 100px; font-size: 18px; }
+        .btn-sale { background-color: #333; height: 120px; font-size: 20px; }
+
+        .footer-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-content">
+            <div class="brand">
+                GYM<br>HERCULES
+            </div>
+            <ul class="menu">
+                <li><a href="#"><i class="fas fa-home"></i> Inicio</a></li>
+                <li><a href="#"><i class="fas fa-user-plus"></i> Registrar Cliente</a></li>
+                <li><a href="#"><i class="fas fa-shopping-cart"></i> Ventas</a></li>
+                <li><a href="#"><i class="fas fa-hand-holding-usd"></i> Cuentas por Cobrar</a></li>
+                <li><a href="#"><i class="fas fa-file-alt"></i> Reportes</a></li>
+            </ul>
+            <div class="config">
+                <a href="#"><i class="fas fa-cog"></i> Configuración</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="header-top">
+            <h2>Resumen:</h2>
+            <button class="btn-update">Actualizar</button>
+        </div>
+
+        <div class="grid-container">
+            <div class="left-col">
+                
+                <div class="section">
+                    <h3>Lista de Alumnos:</h3>
+                    <div class="form-row">
+                        <select style="flex:1;"><option>Servicio</option></select>
+                        <input type="text" placeholder="Nombre" style="flex:2;">
+                    </div>
+                    <div class="data-box"></div>
+                </div>
+
+                <br>
+
+                <div class="section">
+                    <h3>Cuentas por Cobrar:</h3>
+                    <div class="form-row">
+                        <input type="text" placeholder="Nombre">
+                    </div>
+                    <div class="data-box" style="height: 100px;"></div>
+                </div>
+
+                <div class="footer-actions">
+                    <span>Registrar clase por día:</span>
+                    <strong>Costo:</strong>
+                    <input type="number" value="5.00" style="width: 80px;">
+                    <button style="padding: 5px 15px;">Guardar</button>
+                </div>
+            </div>
+
+            <div class="right-col">
+                <button class="btn-large btn-renew">
+                    <i class="fas fa-sync-alt fa-2x"></i>
+                    Renovar
+                </button>
+                <button class="btn-large btn-delete">
+                    <i class="fas fa-times-circle fa-2x"></i>
+                    Eliminar
+                </button>
+
+                <br><br>
+
+                <button class="btn-large btn-pay">
+                    <i class="fas fa-file-signature"></i>
+                    Registrar Pago
+                </button>
+
+                <br>
+                <div style="border-left: 2px solid #ccc; padding-left: 20px; height: 100%;">
+                    <button class="btn-large btn-sale">
+                        <i class="fas fa-shopping-cart"></i>
+                        Realizar Venta
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
