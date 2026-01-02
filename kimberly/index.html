@@ -1,1 +1,72 @@
 hoola
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GYM HERCULES</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo">
+                <h1>GYM HERCULES</h1>
+            </div>
+            <ul>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#">Registrar Cliente</a></li>
+                <li><a href="#">Ventas</a></li>
+                <li><a href="#">Cuentas por Cobrar</a></li>
+                <li><a href="#">Reportes</a></li>
+                <li><a href="#">Configuración</a></li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <header>
+                <button class="btn actualizar">Actualizar</button>
+                <button class="btn cerrar">X</button>
+            </header>
+
+            <section class="resume">
+                <h2>Resumen</h2>
+                <div class="form-group">
+                    <label for="servicio">Servicio</label>
+                    <select id="servicio" name="servicio">
+                        <option value="">Seleccione</option>
+                        <!-- Más opciones aquí -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre">
+                </div>
+                <button class="btn renovar">Renovar</button>
+                <button class="btn eliminar">Eliminar</button>
+            </section>
+
+            <section class="cobrar">
+                <h2>Cuentas por Cobrar</h2>
+                <div class="form-group">
+                    <label for="nombre-cobrar">Nombre</label>
+                    <input type="text" id="nombre-cobrar" name="nombre-cobrar">
+                </div>
+                <button class="btn registrar-pago">Registrar Pago</button>
+            </section>
+
+            <section class="registrar-clase">
+                <h2>Registrar clase por día</h2>
+                <div class="form-group">
+                    <label for="costo">Costo</label>
+                    <input type="number" id="costo" name="costo" value="5.00">
+                </div>
+                <button class="btn guardar">Guardar</button>
+            </section>
+
+            <button class="btn realizar-venta">Realizar Venta</button>
+        </div>
+    </div>
+</body>
+</html>
+
