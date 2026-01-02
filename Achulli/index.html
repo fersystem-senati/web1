@@ -3,261 +3,371 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gym Hercules - Administración</title>
+    <title>Gym Hercules - Sistema Pro</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+        /* --- ESTILOS GENERALES --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { display: flex; height: 100vh; background-color: #f0f2f5; }
 
-        body {
-            display: flex;
-            height: 100vh;
-            background-color: #f4f4f4;
-        }
+        /* SIDEBAR */
+        .sidebar { width: 260px; background-color: #2c0000; color: white; display: flex; flex-direction: column; box-shadow: 2px 0 10px rgba(0,0,0,0.3); }
+        .brand { padding: 30px; text-align: center; font-size: 26px; font-weight: 800; border-bottom: 1px solid rgba(255,255,255,0.1); letter-spacing: 1px; }
+        .menu { list-style: none; margin-top: 20px; }
+        .menu li a { display: flex; align-items: center; padding: 18px 25px; color: #ddd; text-decoration: none; transition: 0.3s; cursor: pointer; border-left: 5px solid transparent; }
+        .menu li a:hover { background-color: rgba(255,255,255,0.05); color: white; border-left: 5px solid #ff4d4d; }
+        .menu li a i { margin-right: 15px; width: 20px; font-size: 18px; }
 
-        /* --- BARRA LATERAL (SIDEBAR) --- */
-        .sidebar {
-            width: 250px;
-            background-color: #4a0000; /* Color rojo oscuro/vino */
-            color: white;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
-        /* Puedes poner tu imagen de fondo aquí si la tienes */
-        .sidebar::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1000&auto=format&fit=crop') center/cover;
-            opacity: 0.2; /* Para que se vea oscurecida */
-            z-index: 0;
-        }
-
-        .sidebar-content {
-            position: relative;
-            z-index: 1;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .brand {
-            padding: 20px;
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .menu {
-            list-style: none;
-            margin-top: 20px;
-        }
-
-        .menu li a {
-            display: flex;
-            align-items: center;
-            padding: 15px 20px;
-            color: white;
-            text-decoration: none;
-            font-size: 16px;
-            transition: 0.3s;
-        }
-
-        .menu li a:hover {
-            background-color: rgba(255,255,255,0.1);
-            border-left: 4px solid white;
-        }
-
-        .menu li a i {
-            margin-right: 15px;
-            width: 20px;
-        }
-
-        .config {
-            margin-top: auto; /* Empuja esto al final */
-            padding: 15px 20px;
-            border-top: 1px solid rgba(255,255,255,0.2);
-        }
+        /* MAIN CONTENT */
+        .main-content { flex: 1; padding: 30px; overflow-y: auto; }
         
-        .config a { color: white; text-decoration: none; display: flex; align-items: center; }
-        .config i { margin-right: 15px; }
-
-        /* --- PANEL PRINCIPAL --- */
-        .main-content {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        h2 { color: #333; }
-
-        .btn-update {
-            padding: 5px 15px;
-            background: #e0e0e0;
-            border: 1px solid #ccc;
-            cursor: pointer;
-        }
-
-        /* --- SECCIONES DEL FORMULARIO --- */
-        .grid-container {
-            display: grid;
-            grid-template-columns: 2fr 1fr; /* Columna ancha y columna estrecha */
-            gap: 20px;
-        }
-
-        .card {
-            background: white;
-            padding: 15px;
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-        }
-
-        .form-row {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        input, select {
-            padding: 8px;
-            border: 1px solid #ccc;
-            width: 100%;
-        }
-
-        .data-box {
-            background-color: #e0e0e0;
-            height: 150px; /* Simulación de la tabla vacía */
-            border: 1px solid #ccc;
-        }
-
-        /* BOTONES GRANDES */
-        .btn-large {
-            width: 100%;
-            padding: 20px;
-            color: white;
-            border: none;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
+        /* HEADER ESTADÍSTICAS */
+        .stats-bar { display: flex; gap: 20px; margin-bottom: 20px; }
+        .stat-card { background: white; flex: 1; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: space-between; border-left: 5px solid #333; }
+        .stat-info h3 { font-size: 24px; color: #333; }
+        .stat-info p { color: #777; font-size: 14px; }
+        .stat-icon { font-size: 30px; opacity: 0.2; }
         
-        .btn-renew { background-color: #999; }
-        .btn-delete { background-color: #8b0000; } /* Rojo oscuro */
-        .btn-pay { background-color: #8b0000; height: 100px; font-size: 18px; }
-        .btn-sale { background-color: #333; height: 120px; font-size: 20px; }
+        .border-blue { border-left-color: #007bff; }
+        .border-green { border-left-color: #28a745; }
+        .border-red { border-left-color: #dc3545; }
 
-        .footer-actions {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 20px;
+        .btn-update { padding: 8px 15px; background: #333; color: white; border: none; cursor: pointer; border-radius: 4px; float: right; }
+        .btn-update:hover { background: #555; }
+
+        /* LAYOUT */
+        .grid-container { display: grid; grid-template-columns: 2fr 1fr; gap: 25px; }
+        
+        /* LISTA DE ALUMNOS */
+        .section-title { font-size: 18px; font-weight: bold; margin-bottom: 15px; color: #444; }
+        .search-bar { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 15px; font-size: 14px; outline: none; }
+        .search-bar:focus { border-color: #2c0000; }
+
+        .data-box { background-color: white; height: 500px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow-y: auto; }
+        
+        .student-item { 
+            padding: 15px; border-bottom: 1px solid #f0f0f0; cursor: pointer; 
+            display: flex; justify-content: space-between; align-items: center; transition: 0.2s;
         }
+        .student-item:hover { background-color: #fafafa; }
+        .student-item.selected { background-color: #ffe6e6; border-left: 4px solid #8b0000; }
+        
+        .st-info { display: flex; flex-direction: column; }
+        .st-name { font-weight: bold; color: #333; font-size: 16px; }
+        .st-sub { color: #888; font-size: 13px; margin-top: 3px; }
+        
+        .st-status { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; text-transform: uppercase; }
+        .active { background: #d4edda; color: #155724; }
+        .expired { background: #f8d7da; color: #721c24; }
+
+        /* BOTONES DE ACCIÓN DERECHA */
+        .btn-large { 
+            width: 100%; padding: 20px; color: white; border: none; font-size: 16px; 
+            font-weight: bold; cursor: pointer; display: flex; flex-direction: row; 
+            align-items: center; justify-content: flex-start; gap: 15px; margin-bottom: 15px; border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s;
+        }
+        .btn-large:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.15); }
+        .btn-large:active { transform: scale(0.98); }
+        
+        .btn-renew { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .btn-delete { background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%); }
+        .btn-pay { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); padding: 30px 20px; }
+
+        /* MODAL */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: 1000; backdrop-filter: blur(2px);
+            justify-content: center; align-items: center;
+        }
+        .modal-box {
+            background: white; padding: 30px; border-radius: 12px; width: 400px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .modal-header { font-size: 22px; font-weight: bold; margin-bottom: 20px; color: #333; text-align: center; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 13px; font-weight: bold; color: #555; margin-bottom: 5px; }
+        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; }
+
+        .modal-footer { margin-top: 25px; display: flex; gap: 10px; }
+        .btn-block { flex: 1; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        .btn-close { background: #eee; color: #555; }
+        .btn-save { background: #2c0000; color: white; }
+
     </style>
 </head>
 <body>
 
     <div class="sidebar">
         <div class="sidebar-content">
-            <div class="brand">
-                GYM<br>HERCULES
-            </div>
+            <div class="brand"><i class="fas fa-dumbbell"></i> GYM HERCULES</div>
             <ul class="menu">
-                <li><a href="#"><i class="fas fa-home"></i> Inicio</a></li>
-                <li><a href="#"><i class="fas fa-user-plus"></i> Registrar Cliente</a></li>
-                <li><a href="#"><i class="fas fa-shopping-cart"></i> Ventas</a></li>
-                <li><a href="#"><i class="fas fa-hand-holding-usd"></i> Cuentas por Cobrar</a></li>
-                <li><a href="#"><i class="fas fa-file-alt"></i> Reportes</a></li>
+                <li><a onclick="location.reload()"><i class="fas fa-home"></i> Inicio</a></li>
+                <li><a onclick="abrirModal()"><i class="fas fa-user-plus"></i> Nuevo Cliente</a></li>
+                <li><a><i class="fas fa-users"></i> Asistencia</a></li>
+                <li><a><i class="fas fa-chart-line"></i> Reportes</a></li>
+                <li><a><i class="fas fa-cog"></i> Configuración</a></li>
             </ul>
-            <div class="config">
-                <a href="#"><i class="fas fa-cog"></i> Configuración</a>
-            </div>
         </div>
     </div>
 
     <div class="main-content">
-        <div class="header-top">
-            <h2>Resumen:</h2>
-            <button class="btn-update">Actualizar</button>
+        <div class="stats-bar">
+            <div class="stat-card border-blue">
+                <div class="stat-info"><h3 id="stat-total">0</h3><p>Total Clientes</p></div>
+                <div class="stat-icon"><i class="fas fa-users"></i></div>
+            </div>
+            <div class="stat-card border-green">
+                <div class="stat-info"><h3 id="stat-activos">0</h3><p>Activos</p></div>
+                <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+            <div class="stat-card border-red">
+                <div class="stat-info"><h3 id="stat-vencidos">0</h3><p>Vencidos</p></div>
+                <div class="stat-icon"><i class="fas fa-exclamation-circle"></i></div>
+            </div>
         </div>
 
         <div class="grid-container">
             <div class="left-col">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h3 class="section-title">Listado de Miembros</h3>
+                    <button class="btn-update" onclick="resetearDatos()">⚠ Resetear Demo</button>
+                </div>
                 
-                <div class="section">
-                    <h3>Lista de Alumnos:</h3>
-                    <div class="form-row">
-                        <select style="flex:1;"><option>Servicio</option></select>
-                        <input type="text" placeholder="Nombre" style="flex:2;">
+                <input type="text" id="buscador" class="search-bar" placeholder="🔍 Buscar por nombre, apellido..." oninput="filtrarAlumnos()">
+                
+                <div class="data-box" id="lista-container">
                     </div>
-                    <div class="data-box"></div>
-                </div>
-
-                <br>
-
-                <div class="section">
-                    <h3>Cuentas por Cobrar:</h3>
-                    <div class="form-row">
-                        <input type="text" placeholder="Nombre">
-                    </div>
-                    <div class="data-box" style="height: 100px;"></div>
-                </div>
-
-                <div class="footer-actions">
-                    <span>Registrar clase por día:</span>
-                    <strong>Costo:</strong>
-                    <input type="number" value="5.00" style="width: 80px;">
-                    <button style="padding: 5px 15px;">Guardar</button>
-                </div>
             </div>
 
             <div class="right-col">
-                <button class="btn-large btn-renew">
+                <h3 class="section-title">Acciones</h3>
+                
+                <button class="btn-large btn-renew" onclick="renovarMembresia()">
                     <i class="fas fa-sync-alt fa-2x"></i>
-                    Renovar
+                    <div>
+                        <div>RENOVAR MES</div>
+                        <small style="font-weight: normal; font-size: 12px;">Suma 30 días al plan</small>
+                    </div>
                 </button>
-                <button class="btn-large btn-delete">
-                    <i class="fas fa-times-circle fa-2x"></i>
-                    Eliminar
-                </button>
-
-                <br><br>
-
-                <button class="btn-large btn-pay">
-                    <i class="fas fa-file-signature"></i>
-                    Registrar Pago
+                
+                <button class="btn-large btn-delete" onclick="eliminarCliente()">
+                    <i class="fas fa-trash-alt fa-2x"></i>
+                    <div>
+                        <div>ELIMINAR</div>
+                        <small style="font-weight: normal; font-size: 12px;">Borrar del sistema</small>
+                    </div>
                 </button>
 
                 <br>
-                <div style="border-left: 2px solid #ccc; padding-left: 20px; height: 100%;">
-                    <button class="btn-large btn-sale">
-                        <i class="fas fa-shopping-cart"></i>
-                        Realizar Venta
-                    </button>
-                </div>
+                
+                <button class="btn-large btn-pay" onclick="registrarPagoExtra()">
+                    <i class="fas fa-money-bill-wave fa-2x"></i>
+                    <div>
+                        <div>REGISTRAR PAGO</div>
+                        <small style="font-weight: normal; font-size: 12px;">Productos / Extras</small>
+                    </div>
+                </button>
             </div>
         </div>
     </div>
 
+    <div class="modal-overlay" id="modalRegistro">
+        <div class="modal-box">
+            <div class="modal-header">Registrar Nuevo Cliente</div>
+            
+            <div class="form-group">
+                <label>Nombre Completo:</label>
+                <input type="text" id="nuevo-nombre" placeholder="Ej: Carlos Perez">
+            </div>
+            
+            <div class="form-group">
+                <label>Tipo de Servicio:</label>
+                <select id="nuevo-servicio">
+                    <option value="Pesas">Pesas (S/. 50)</option>
+                    <option value="Cardio">Cardio (S/. 40)</option>
+                    <option value="Full Pass">Full Pass (S/. 80)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Duración Inicial:</label>
+                <select id="nuevo-duracion">
+                    <option value="30">1 Mes</option>
+                    <option value="90">3 Meses</option>
+                    <option value="365">1 Año</option>
+                </select>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn-block btn-close" onclick="cerrarModal()">Cancelar</button>
+                <button class="btn-block btn-save" onclick="guardarNuevoCliente()">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DATOS INICIALES (TUS NOMBRES + FECHAS SIMULADAS)
+        const datosIniciales = [
+            { id: 1, nombre: "Peter", servicio: "Pesas", fechaFin: "2024-02-15" },  // Vencido (ejemplo antiguo)
+            { id: 2, nombre: "Kimi", servicio: "Full Pass", fechaFin: new Date(Date.now() + 15 * 86400000).toISOString().split('T')[0] }, // Activo (15 dias mas)
+            { id: 3, nombre: "Chulli", servicio: "Pesas", fechaFin: new Date(Date.now() - 5 * 86400000).toISOString().split('T')[0] }, // Vencido hace 5 dias
+            { id: 4, nombre: "Cueva", servicio: "Cardio", fechaFin: new Date(Date.now() + 20 * 86400000).toISOString().split('T')[0] }, // Activo
+            { id: 5, nombre: "Leo", servicio: "Pesas", fechaFin: new Date(Date.now() + 2 * 86400000).toISOString().split('T')[0] }, // Por vencer
+            { id: 6, nombre: "Vivanco", servicio: "Crossfit", fechaFin: "2023-12-01" }, // Muy vencido
+            { id: 7, nombre: "Cristi", servicio: "Full Pass", fechaFin: new Date(Date.now() + 30 * 86400000).toISOString().split('T')[0] } // Nuevo
+        ];
+
+        // CARGAR O INICIAR
+        let alumnos = JSON.parse(localStorage.getItem('alumnos_db_v2')) || datosIniciales;
+        let seleccionadoID = null;
+
+        // FUNCIONES PRINCIPALES
+        function renderizar(lista = alumnos) {
+            const container = document.getElementById('lista-container');
+            container.innerHTML = "";
+
+            let total = 0, activos = 0, vencidos = 0;
+            const hoy = new Date().toISOString().split('T')[0];
+
+            if (lista.length === 0) container.innerHTML = "<div style='padding:20px; text-align:center; color:#999'>No se encontraron resultados.</div>";
+
+            lista.forEach(alumno => {
+                total++;
+                // Lógica de fechas
+                const estaVencido = alumno.fechaFin < hoy;
+                if (estaVencido) vencidos++; else activos++;
+
+                const estadoHTML = estaVencido 
+                    ? `<span class="st-status expired">VENCIDO (${alumno.fechaFin})</span>` 
+                    : `<span class="st-status active">ACTIVO HASTA ${alumno.fechaFin}</span>`;
+
+                const div = document.createElement('div');
+                div.className = `student-item ${seleccionadoID === alumno.id ? 'selected' : ''}`;
+                div.innerHTML = `
+                    <div class="st-info">
+                        <span class="st-name"><i class="fas fa-user-circle"></i> ${alumno.nombre}</span>
+                        <span class="st-sub">${alumno.servicio}</span>
+                    </div>
+                    ${estadoHTML}
+                `;
+                div.onclick = () => seleccionar(alumno.id);
+                container.appendChild(div);
+            });
+
+            // Actualizar estadisticas
+            document.getElementById('stat-total').innerText = total;
+            document.getElementById('stat-activos').innerText = activos;
+            document.getElementById('stat-vencidos').innerText = vencidos;
+        }
+
+        function seleccionar(id) {
+            seleccionadoID = id;
+            renderizar(alumnos); // Refrescar para ver la selección
+        }
+
+        // --- GESTIÓN DE CLIENTES ---
+
+        function abrirModal() {
+            document.getElementById('modalRegistro').style.display = 'flex';
+            document.getElementById('nuevo-nombre').focus();
+        }
+
+        function cerrarModal() {
+            document.getElementById('modalRegistro').style.display = 'none';
+            document.getElementById('nuevo-nombre').value = "";
+        }
+
+        function guardarNuevoCliente() {
+            const nombre = document.getElementById('nuevo-nombre').value;
+            const servicio = document.getElementById('nuevo-servicio').value;
+            const dias = parseInt(document.getElementById('nuevo-duracion').value);
+
+            if (!nombre.trim()) return alert("El nombre es obligatorio");
+
+            // Calcular fecha fin
+            const fecha = new Date();
+            fecha.setDate(fecha.getDate() + dias);
+            const fechaFinString = fecha.toISOString().split('T')[0];
+
+            const nuevo = { id: Date.now(), nombre, servicio, fechaFin: fechaFinString };
+            
+            alumnos.push(nuevo);
+            guardarYRenderizar();
+            cerrarModal();
+            alert(`✅ ${nombre} registrado exitosamente hasta ${fechaFinString}`);
+        }
+
+        function eliminarCliente() {
+            if (!seleccionadoID) return alert("⚠️ Selecciona un cliente primero.");
+            if (confirm("¿Seguro que deseas eliminar este registro?")) {
+                alumnos = alumnos.filter(a => a.id !== seleccionadoID);
+                seleccionadoID = null;
+                guardarYRenderizar();
+            }
+        }
+
+        function renovarMembresia() {
+            if (!seleccionadoID) return alert("⚠️ Selecciona un cliente para renovar.");
+            
+            const alumno = alumnos.find(a => a.id === seleccionadoID);
+            
+            // Lógica inteligente: Si ya está vencido, renueva desde HOY. Si no, suma al final.
+            const hoy = new Date();
+            let fechaBase = new Date(alumno.fechaFin);
+            
+            if (fechaBase < hoy) fechaBase = hoy; // Si venció ayer, empieza hoy.
+
+            fechaBase.setDate(fechaBase.getDate() + 30);
+            alumno.fechaFin = fechaBase.toISOString().split('T')[0];
+
+            guardarYRenderizar();
+            alert(`🎉 Membresía de ${alumno.nombre} renovada hasta ${alumno.fechaFin}`);
+        }
+        
+        function registrarPagoExtra() {
+            if (!seleccionadoID) return alert("⚠️ Selecciona quién paga.");
+             const alumno = alumnos.find(a => a.id === seleccionadoID);
+             const monto = prompt(`Registrar venta de producto para ${alumno.nombre}.\nIngrese monto (S/.):`);
+             if(monto) alert(`💰 Venta de S/. ${monto} registrada correctamente.`);
+        }
+
+        // --- UTILIDADES ---
+
+        function filtrarAlumnos() {
+            const texto = document.getElementById('buscador').value.toLowerCase();
+            const filtrados = alumnos.filter(a => a.nombre.toLowerCase().includes(texto));
+            // Hack para renderizar lista filtrada sin perder la global
+            // En una app real se maneja distinto, aquí modificamos renderizar para aceptar parametro
+            const container = document.getElementById('lista-container');
+            container.innerHTML = "";
+            
+            // Copia de renderizar simplificada para busqueda
+            filtrados.forEach(alumno => {
+                // ... (reusamos lógica visual si queremos, por simplicidad llamamos a renderizar con filtro)
+            });
+            renderizar(filtrados);
+        }
+
+        function guardarYRenderizar() {
+            localStorage.setItem('alumnos_db_v2', JSON.stringify(alumnos));
+            renderizar();
+        }
+
+        function resetearDatos() {
+            if(confirm("Esto borrará tus cambios y restaurará la lista original de nombres. ¿Seguir?")) {
+                localStorage.removeItem('alumnos_db_v2');
+                location.reload();
+            }
+        }
+
+        // INICIO
+        window.onload = () => renderizar();
+
+    </script>
 </body>
 </html>
